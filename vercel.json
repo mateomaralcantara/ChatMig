@@ -1,11 +1,9 @@
 {
-    "builds": [
-      { "src": "services/web/package.json", "use": "@vercel/static-build", "config": { "distDir": "services/web/dist" } },
-      { "src": "services/api/index.py", "use": "@vercel/python" }
-    ],
-    "routes": [
-      { "src": "^/api/.*", "dest": "services/api/index.py" },
-      { "src": "/(.*)", "dest": "services/web/dist/$1" }
+    "version": 2,
+    "buildCommand": "npm ci --prefix services/web && npm run build --prefix services/web",
+    "outputDirectory": "services/web/dist",
+    "rewrites": [
+      { "source": "/(.*)", "destination": "/index.html" }
     ]
   }
   
