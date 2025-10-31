@@ -1,0 +1,9 @@
+cd C:\Users\martin\Desktop\APP\ChatMig
+
+@"
+*
+!vercel.json
+!services/web/**
+!services/api/main.py
+!services/api/requirements.txt
+"@ | Set-Content .vercelignore
