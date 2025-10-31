@@ -1,0 +1,87 @@
+/* ===== Voice Agent (va-*) — overlay flotante con glass ===== */
+:root{
+    --va-bg: rgba(10,12,20,.72);
+    --va-glass: linear-gradient(180deg, rgba(255,255,255,.06), rgba(0,0,0,.10));
+    --va-line: #273244;
+    --va-text: #eaf2ff;
+    --va-sub: #cbd5e1;
+    --va-acc: #60a5fa;
+    --va-red: #ef4444;
+    --va-radius: 16px;
+  }
+  
+  .va-overlay{
+    position: fixed;
+    inset: auto 20px 20px auto;
+    z-index: 60;
+    transform: translateY(8px);
+    opacity: 0;
+    pointer-events: none;
+    transition: transform .18s ease, opacity .18s ease;
+  }
+  .va-overlay.open{ transform: none; opacity: 1; pointer-events: auto; }
+  .va-overlay.dock-br{ right:20px; bottom:20px; left:auto; top:auto }
+  .va-overlay.dock-bl{ left:20px; bottom:20px; right:auto; top:auto }
+  .va-overlay.dock-tr{ right:20px; top:20px; left:auto; bottom:auto }
+  .va-overlay.dock-tl{ left:20px; top:20px; right:auto; bottom:auto }
+  
+  .va-card{
+    display: grid; grid-template-columns: auto 1fr; gap: 12px;
+    padding: 14px; min-width: 320px; max-width: min(520px, 92vw);
+    color: var(--va-text);
+    border: 1px solid var(--va-line);
+    border-radius: var(--va-radius);
+    background: var(--va-glass), var(--va-bg);
+    box-shadow: 0 10px 40px rgba(0,0,0,.45), 0 0 0 1px rgba(255,255,255,.04) inset;
+    backdrop-filter: blur(8px) saturate(120%);
+  }
+  
+  .va-avatar{
+    position: relative;
+    inline-size: 64px; block-size: 64px; border-radius: 999px; overflow: hidden;
+    border: 1px solid rgba(255,255,255,.12);
+    box-shadow: 0 6px 24px rgba(2,6,23,.45);
+  }
+  .va-avatar img{ width:100%; height:100%; object-fit: cover; display:block }
+  .va-ring, .va-ring2{
+    content:""; position:absolute; inset:-6px; border-radius:999px; pointer-events:none;
+    border: 2px solid rgba(96,165,250,.45);
+    animation: vaPulse 2.1s ease-out infinite;
+  }
+  .va-ring2{ inset:-12px; animation-delay: .6s; opacity: .7 }
+  .va-avatar.paused .va-ring, .va-avatar.paused .va-ring2{ animation-play-state: paused; opacity:.35 }
+  
+  @keyframes vaPulse{
+    0%{ transform: scale(.88); opacity: .85 }
+    70%{ transform: scale(1.1); opacity: 0 }
+    100%{ transform: scale(.88); opacity: 0 }
+  }
+  
+  .va-main{ display:flex; flex-direction:column; gap:8px; min-width:0 }
+  .va-title{ display:flex; align-items:center; gap:8px; font-weight:900; letter-spacing:.2px }
+  .va-lang{ margin-inline-start:auto; font-size:12px; color: var(--va-sub); border:1px solid var(--va-line); padding:2px 6px; border-radius:999px }
+  .va-text{
+    font-size: 14px; line-height: 1.5; color: var(--va-text);
+    border:1px solid var(--va-line); border-radius:12px; padding:10px 12px;
+    background: rgba(255,255,255,.03);
+    max-height: 120px; overflow:auto;
+  }
+  
+  .va-actions{ display:flex; gap:8px; flex-wrap:wrap }
+  .va-btn{
+    appearance:none; cursor:pointer;
+    color: var(--va-text); background: transparent;
+    border:1px solid var(--va-line); border-radius:10px; padding:8px 12px; font-weight:800;
+    transition: transform .08s ease, box-shadow .18s ease, border-color .18s ease, background .18s ease;
+  }
+  .va-btn:hover{
+    border-color: rgba(96,165,250,.5);
+    box-shadow: 0 8px 18px rgba(2,6,23,.35), 0 0 0 1px rgba(255,255,255,.05) inset;
+    background: linear-gradient(90deg, rgba(59,130,246,.12), rgba(239,68,68,.10));
+  }
+  .va-btn:active{ transform: translateY(1px) }
+  .va-btn.danger{ border-color: rgba(239,68,68,.55); color: #fecaca }
+  @media (max-width: 480px){
+    .va-card{ min-width: unset; width: calc(100vw - 24px) }
+  }
+  

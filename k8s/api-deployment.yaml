@@ -1,0 +1,16 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: chatsed-api
+spec:
+  replicas: 1
+  selector:
+    matchLabels: { app: chatsmig-api }
+  template:
+    metadata:
+      labels: { app: chatmig-api }
+    spec:
+      containers:
+        - name: api
+          image: chatmig-api:latest
+          ports: [{ containerPort: 8000 }]

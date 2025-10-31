@@ -1,0 +1,124 @@
+/* ===========================
+   Layout lateral derecho (opt)
+   =========================== */
+
+/* Variables y timing */
+:root{
+    --sidebar-w: 360px;                    /* ancho panel desktop */
+    --sidebar-w-mobile: min(92vw, 380px);  /* ancho panel móvil */
+    --z-toggle: 30;
+    --z-backdrop: 35;
+    --z-sidebar: 40;
+    --radius: 12px;
+    --easing: cubic-bezier(.2,.8,.2,1);
+    --t: .25s var(--easing);
+  }
+  
+  /* --- Layout base (desktop) --- */
+  .layout{
+    display: grid;
+    /* Hacemos animable el ancho del panel con variable */
+    --sidebar-col: var(--sidebar-w);
+    grid-template-columns: 1fr var(--sidebar-col);
+    min-block-size: 100dvh;
+    transition: grid-template-columns var(--t);
+  }
+  .layout.layout--hide-sidebar{
+    --sidebar-col: 0px;                    /* oculta panel a 0px */
+  }
+  .content{
+    padding: 20px;
+    position: relative;
+  }
+  
+  /* --- Panel derecho --- */
+  .sidebar{
+    position: relative;
+    border-inline-start: 1px solid var(--line);
+    padding: 16px;
+    background: var(--panel);
+    overflow: auto;
+  }
+  /* Oculta interacción cuando está a 0px en desktop */
+  .layout--hide-sidebar .sidebar{
+    visibility: hidden;
+    pointer-events: none;
+  }
+  .sidebar .close{
+    position: absolute;
+    inset-inline-end: 12px; inset-block-start: 10px;
+    background: transparent; border: none; color: var(--sub);
+    font-size: 20px; cursor: pointer;
+  }
+  .sidebar .close:focus-visible{
+    outline: 2px solid #60a5fa; outline-offset: 2px; border-radius: 6px;
+  }
+  
+  /* --- Botón flotante para abrir/cerrar --- */
+  .toggle-btn{
+    position: fixed; inset-block-start: 12px; inset-inline-end: 12px; z-index: var(--z-toggle);
+    background: #2563eb; color: #fff; border: none; border-radius: 999px;
+    padding: 8px 12px; cursor: pointer; box-shadow: 0 6px 16px rgba(0,0,0,.3);
+    transition: filter .15s ease, transform .06s ease;
+  }
+  .toggle-btn:hover{ filter: brightness(1.05); }
+  .toggle-btn:active{ transform: translateY(1px); }
+  .toggle-btn:focus-visible{ outline: 2px solid #93c5fd; outline-offset: 2px; }
+  
+  /* --- Toggle opcional en header (si lo usas) --- */
+  .header-toggle{
+    background: transparent; color: var(--text);
+    border: 1px dashed var(--line);
+    border-radius: 999px; padding: 6px 10px; cursor: pointer;
+    transition: background .25s ease, border-color .25s ease, box-shadow .25s ease;
+    font-size: 12px;
+  }
+  .header-toggle:hover{
+    background: linear-gradient(90deg, rgba(59,130,246,.15), rgba(239,68,68,.12));
+    border-color: rgba(96,165,250,.35);
+    box-shadow: 0 4px 16px rgba(2,6,23,.4);
+  }
+  .header-toggle:focus-visible{ outline: 2px solid #60a5fa; outline-offset: 2px; }
+  
+  /* --- Drawer en móviles --- */
+  @media (max-width: 1024px){
+    .layout{
+      /* En móvil no reservamos columna: el panel es drawer */
+      grid-template-columns: 1fr;
+    }
+    .sidebar{
+      position: fixed; inset-block-start: 0; inset-inline-end: 0; block-size: 100%;
+      inline-size: var(--sidebar-w-mobile);
+      transform: translateX(100%);         /* escondido por defecto */
+      transition: transform var(--t);
+      z-index: var(--z-sidebar);
+      border-inline-start: 1px solid var(--line);
+      box-shadow: -10px 0 30px rgba(0,0,0,.45);
+      visibility: visible;                  /* siempre visible para permitir la animación */
+      pointer-events: auto;
+    }
+    .sidebar.is-open{
+      transform: translateX(0);             /* visible */
+    }
+  
+    /* Backdrop con transición y sin bloquear clicks cuando está oculto */
+    .backdrop{
+      position: fixed; inset: 0;
+      background: rgba(0,0,0,.5);
+      z-index: var(--z-backdrop);
+      opacity: 0; pointer-events: none;
+      transition: opacity var(--t);
+    }
+    .backdrop.is-active{
+      opacity: 1; pointer-events: auto;
+    }
+  
+    /* Evitar scroll del contenido cuando el drawer está abierto (añade .no-scroll al <body>) */
+    body.no-scroll{ overflow: hidden; }
+  }
+  
+  /* --- Accesibilidad / motion --- */
+  @media (prefers-reduced-motion: reduce){
+    .layout, .sidebar, .backdrop, .toggle-btn{ transition: none !important; }
+  }
+  

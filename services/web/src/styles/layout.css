@@ -1,0 +1,56 @@
+/* --- Layout base (desktop) --- */
+.layout{
+  display:grid;
+  grid-template-columns: 1fr 360px;  /* panel visible en desktop */
+  min-height:100vh;
+}
+.layout.hide-sidebar{
+  grid-template-columns: 1fr 0;      /* ocultar panel en desktop */
+}
+.content{ padding:20px; position:relative; }
+
+/* --- Panel derecho (base) --- */
+.sidebar{
+  border-left:1px solid var(--line);
+  padding:16px; background:var(--panel);
+}
+.sidebar .close{
+  position:absolute; right:12px; top:10px;
+  background:transparent; border:none; color:var(--sub);
+  font-size:20px; cursor:pointer;
+}
+
+/* Estados de layout para animaciones sutiles */
+.layout[data-sidebar="open"] .content{
+  transition: filter .25s ease, transform .25s ease;
+}
+@media (min-width:1025px){
+  .layout[data-sidebar="open"] .content { transform: translateZ(0); }
+  .layout.hide-sidebar .content { transform: translateZ(0); }
+}
+
+/* --- Drawer en móviles --- */
+@media (max-width:1024px){
+  .layout{
+    grid-template-columns: 1fr;      /* sin segunda columna en móvil */
+  }
+  .sidebar{
+    position:fixed; top:0; right:0; height:100%;
+    width:min(92vw, 380px);
+    transform: translateX(100%);     /* escondido por defecto */
+    transition: transform .25s ease;
+    z-index: 40;
+    border-left:1px solid var(--line);
+    box-shadow: -10px 0 30px rgba(0,0,0,.45);
+    background:
+      linear-gradient(180deg, rgba(255,255,255,.03), rgba(0,0,0,.08)),
+      var(--panel);
+    backdrop-filter: saturate(110%) blur(8px);
+  }
+  .sidebar.open{
+    transform: translateX(0);        /* visible */
+  }
+  .backdrop{
+    position:fixed; inset:0; background:rgba(0,0,0,.5); z-index:35;
+  }
+}

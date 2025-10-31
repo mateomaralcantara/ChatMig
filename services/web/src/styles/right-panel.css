@@ -1,0 +1,226 @@
+/* =========================================================
+   Right Panel (cuentas / login / membresías) — .rp-*
+   - No pisa .cs-* (chat) ni .layout/.sidebar del layout
+   - Tabs, cards, formularios, alertas y precios
+   - DRY: tokens reutilizables (fondos/bordes/sombras)
+   ========================================================= */
+
+/* Fallbacks si el tema global aún no cargó */
+:root{
+  --bg:#081019;
+  --panel:#0f172a;
+  --sub:#cbd5e1;
+  --text:#eaf2ff;
+  --line:#1f2937;
+  --acc:#3b82f6;
+  --acc-2:#ef4444;
+  --vio:#7c3aed;
+
+  /* Paleta panel */
+  --rp-green:#10b981;
+  --rp-amber:#f59e0b;
+  --rp-red:#ef4444;
+
+  /* Tokens */
+  --rp-radius:14px;
+  --rp-radius-sm:10px;
+  --rp-pad:12px;
+  --rp-gap:10px;
+
+  /* Capas “glass” */
+  --rp-bg-glass: linear-gradient(180deg, rgba(255,255,255,.03), rgba(0,0,0,.08));
+  --rp-bg-card:  linear-gradient(180deg, rgba(255,255,255,.02), rgba(0,0,0,.10));
+  --rp-bg-hero:  radial-gradient(600px 220px at 0% 0%, rgba(59,130,246,.18), transparent),
+                 radial-gradient(600px 220px at 100% 0%, rgba(239,68,68,.15), transparent),
+                 linear-gradient(180deg, rgba(255,255,255,.03), rgba(0,0,0,.12));
+
+  --rp-border: 1px solid var(--line);
+  --rp-shadow-soft: 0 6px 24px rgba(2,6,23,.35), inset 0 0 0 1px rgba(255,255,255,.02);
+  --rp-shadow-hero: 0 8px 28px rgba(2,6,23,.45), 0 0 24px -6px rgba(96,165,250,.45), inset 0 0 0 1px rgba(255,255,255,.04);
+
+  /* Focus ring consistente */
+  --rp-ring: 0 0 0 3px rgba(59,130,246,.25);
+}
+
+/* ===== Contenedor principal ===== */
+.sidebar.rp-panel{
+  display:flex; flex-direction:column; gap:12px;
+  padding:16px; color:var(--text);
+  background: var(--rp-bg-glass), var(--panel);
+  backdrop-filter: saturate(110%) blur(2px);
+  overflow:hidden; /* headers sticky y sombras internas */
+}
+
+/* ===== Scroll interno ===== */
+.rp-scroll{ overflow:auto; padding-right:4px; scrollbar-width:thin }
+.rp-scroll::-webkit-scrollbar{ width:8px }
+.rp-scroll::-webkit-scrollbar-thumb{ background:rgba(148,163,184,.3); border-radius:999px }
+
+/* ===== Header ===== */
+.rp-header{
+  position:sticky; top:0; z-index:2;
+  padding-bottom:10px; margin-bottom:8px;
+  background: linear-gradient(180deg, rgba(0,0,0,.28), transparent);
+  backdrop-filter: blur(4px);
+  border-bottom: var(--rp-border);
+}
+.rp-title{ display:flex; align-items:center; gap:8px; font-weight:900; letter-spacing:.2px }
+.rp-sub{ font-size:12px; color:var(--sub); margin-top:2px }
+
+/* ===== Tabs ===== */
+.rp-tabs{ display:flex; gap:6px; flex-wrap:wrap; margin-top:10px }
+.rp-tab{
+  appearance:none; background:transparent; color:var(--text);
+  border:1px dashed var(--line); border-radius:999px; padding:6px 10px; font-size:12px; cursor:pointer;
+  transition: background .2s ease, border-color .2s ease, box-shadow .2s ease;
+}
+.rp-tab:hover{
+  background: linear-gradient(90deg, rgba(59,130,246,.12), rgba(239,68,68,.10));
+  border-color: rgba(96,165,250,.35);
+  box-shadow: 0 2px 10px rgba(2,6,23,.3);
+}
+.rp-tab.active{
+  background: linear-gradient(135deg, rgba(59,130,246,.25), rgba(124,58,237,.22));
+  border-color: rgba(96,165,250,.55);
+  box-shadow: 0 4px 14px rgba(2,6,23,.35), 0 0 0 1px rgba(255,255,255,.05) inset;
+}
+
+/* ===== Secciones ===== */
+.rp-section{ margin-top:8px; padding-top:8px }
+.rp-section h3{
+  margin:8px 0 6px; font-size:14px; font-weight:800; letter-spacing:.2px; color:#93c5fd;
+}
+.rp-muted{ font-size:12px; color:var(--sub) }
+
+/* ===== Cards ===== */
+.rp-card{
+  border:var(--rp-border); border-radius:var(--rp-radius);
+  padding:var(--rp-pad); background: var(--rp-bg-card); box-shadow: var(--rp-shadow-soft);
+}
+.rp-card + .rp-card{ margin-top:10px }
+.rp-card.headed > .rp-card-title{
+  display:flex; align-items:center; gap:8px; margin-bottom:8px; font-weight:800;
+}
+.rp-kbd{
+  border:var(--rp-border); border-radius:6px; padding:0 6px; font-size:12px; color:var(--sub);
+  background: rgba(255,255,255,.04);
+}
+
+/* ===== Formularios ===== */
+.rp-form{ display:grid; gap:var(--rp-gap) }
+.rp-row{ display:grid; gap:6px }
+.rp-row.inline{ grid-template-columns:1fr 1fr; gap:var(--rp-gap) }
+.rp-row label{ font-size:12px; color:var(--sub) }
+
+.rp-input,
+.rp-textarea{
+  width:100%; background:rgba(255,255,255,.03); color:var(--text);
+  border:var(--rp-border); border-radius:var(--rp-radius-sm);
+  padding:10px 12px; outline:none;
+  transition: box-shadow .15s ease, border-color .15s ease;
+}
+.rp-textarea{ min-height:84px; resize:vertical }
+.rp-input:focus, .rp-textarea:focus{
+  border-color: rgba(96,165,250,.45); box-shadow: var(--rp-ring);
+}
+
+/* Selects del panel a ancho completo (usa tu .cm-select) */
+.sidebar .cm-select{ width:100% }
+
+/* ===== Botones ===== */
+.rp-actions{ display:flex; gap:8px; flex-wrap:wrap }
+.rp-btn{
+  appearance:none; border:var(--rp-border); background:transparent; color:var(--text);
+  padding:8px 12px; border-radius:var(--rp-radius-sm); cursor:pointer; font-weight:700;
+  transition: transform .08s ease-in-out, box-shadow .2s ease, border-color .2s ease, background .2s ease;
+}
+.rp-btn:hover{
+  border-color: rgba(96,165,250,.45);
+  box-shadow: 0 8px 18px rgba(2,6,23,.35), 0 0 0 1px rgba(255,255,255,.04) inset;
+}
+.rp-btn:active{ transform: translateY(1px) }
+.rp-btn.block{ width:100%; justify-content:center }
+
+.rp-btn.primary{
+  border:0; color:#0b1020;
+  background: linear-gradient(135deg, var(--acc), var(--vio));
+  box-shadow: 0 8px 28px rgba(59,130,246,.25);
+}
+.rp-btn.success{
+  border:0; color:#06251e;
+  background: linear-gradient(135deg, var(--rp-green), #22d3ee);
+}
+.rp-btn.ghost{ background: rgba(255,255,255,.04) }
+.rp-btn.danger{ border-color: rgba(248,113,113,.45); color:#fecaca }
+
+/* ===== Alertas ===== */
+.rp-alert{
+  border:var(--rp-border); border-radius:var(--rp-radius-sm);
+  padding:10px 12px; font-size:13px; background: rgba(255,255,255,.03);
+}
+.rp-alert.success{ border-color:rgba(16,185,129,.35); background:rgba(16,185,129,.08); color:#d1fae5 }
+.rp-alert.warn{    border-color:rgba(245,158,11,.35); background:rgba(245,158,11,.10); color:#fff7ed }
+.rp-alert.error{   border-color:rgba(239,68,68,.35);  background:rgba(127,29,29,.25); color:#fecaca }
+
+/* ===== Divider ===== */
+.rp-divider{
+  display:grid; grid-template-columns:1fr auto 1fr; align-items:center;
+  gap:10px; margin:12px 0; color:var(--sub); font-size:12px;
+}
+.rp-divider::before, .rp-divider::after{ content:""; height:1px; background:var(--line) }
+
+/* ===== Lista / Items ===== */
+.rp-list{ display:grid; gap:8px }
+.rp-item{
+  display:flex; align-items:center; gap:10px;
+  border:var(--rp-border); border-radius:var(--rp-radius-sm);
+  padding:10px 12px; background: rgba(255,255,255,.02);
+}
+.rp-item .rp-badge{
+  font-size:11px; font-weight:900; padding:2px 6px; border-radius:999px;
+  color:#0b1020; background:#a5b4fc;
+}
+
+/* ===== Pricing ===== */
+.rp-pricing{ display:grid; grid-template-columns:repeat(2, minmax(0,1fr)); gap:10px }
+@media (max-width:380px){ .rp-pricing{ grid-template-columns:1fr } }
+
+.rp-plan{
+  position:relative; border:var(--rp-border); border-radius:var(--rp-radius);
+  padding:14px; background: var(--rp-bg-hero); box-shadow: var(--rp-shadow-hero);
+}
+.rp-plan.pro{ outline:1px solid rgba(59,130,246,.45) }
+.rp-plan.premium{ outline:1px solid rgba(124,58,237,.45) }
+
+.rp-plan .rp-plan-head{
+  display:flex; justify-content:space-between; align-items:center; gap:10px; margin-bottom:8px;
+}
+.rp-badge.pro, .rp-badge.premium{ color:#0b1020; font-weight:900; border-radius:999px; padding:2px 8px; font-size:12px }
+.rp-badge.pro{ background:#93c5fd } .rp-badge.premium{ background:#d8b4fe }
+
+.rp-price{
+  font-weight:900; font-size:22px; letter-spacing:.2px;
+  background: linear-gradient(90deg, #60a5fa, #3b82f6, #ef4444);
+  -webkit-background-clip:text; background-clip:text; color:transparent;
+  text-shadow: 0 0 18px rgba(96,165,250,.25);
+}
+.rp-feats{ margin-top:8px; display:grid; gap:6px }
+.rp-feats li{
+  list-style:none; display:grid; grid-template-columns:16px 1fr; gap:8px; align-items:start;
+  font-size:13px; color:var(--text);
+}
+.rp-feats li::before{
+  content:"✓";
+  display:inline-grid; place-items:center;
+  width:16px; height:16px; border-radius:999px;
+  background: rgba(16,185,129,.2);
+  color:#34d399; font-weight:900; font-size:12px;
+}
+
+/* ===== Legal ===== */
+.rp-legal{ font-size:11px; color:var(--sub); margin-top:4px }
+
+/* ===== Animación ===== */
+.rp-fade-in{ animation: rpFade .18s ease-out }
+@keyframes rpFade{ from{ opacity:0; transform:translateY(4px) } to{ opacity:1; transform:none } }
+

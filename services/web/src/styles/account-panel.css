@@ -1,0 +1,148 @@
+/* ===========================
+   Account / Auth Right Panel
+   =========================== */
+
+   .account-panel{
+    display:flex;
+    flex-direction:column;
+    gap:12px;
+  }
+  
+  .auth-header{
+    display:flex; align-items:center; justify-content:space-between;
+  }
+  .auth-title{
+    font-weight:900; letter-spacing:.2px;
+  }
+  .auth-sub{
+    color:var(--sub); font-size:12px;
+  }
+  
+  /* Tabs Crear cuenta / Iniciar sesión */
+  .auth-tabs{
+    display:flex; gap:6px; margin-top:4px;
+    border-bottom:1px dashed var(--line);
+    padding-bottom:8px;
+  }
+  .auth-tab{
+    background:transparent; color:var(--text);
+    border:1px dashed var(--line); border-bottom:none;
+    padding:8px 12px; border-top-left-radius:10px; border-top-right-radius:10px;
+    cursor:pointer; font-size:13px;
+    transition: background .2s ease, border-color .2s ease, box-shadow .2s ease;
+  }
+  .auth-tab:hover{
+    background: linear-gradient(90deg, rgba(59,130,246,.12), rgba(239,68,68,.10));
+    border-color: rgba(96,165,250,.35);
+    box-shadow: 0 2px 10px rgba(2,6,23,.3);
+  }
+  .auth-tab.is-active{
+    background: linear-gradient(180deg, rgba(255,255,255,.04), rgba(0,0,0,.08));
+    border-color: rgba(96,165,250,.45);
+  }
+  
+  /* Card de auth */
+  .auth-card{
+    border:1px solid var(--line);
+    background: linear-gradient(180deg, rgba(255,255,255,.02), rgba(0,0,0,.08));
+    border-radius:12px; padding:14px; display:flex; flex-direction:column; gap:10px;
+    box-shadow: 0 6px 22px rgba(2,6,23,.35), inset 0 0 0 1px rgba(255,255,255,.02);
+  }
+  
+  .form{
+    display:flex; flex-direction:column; gap:10px;
+  }
+  .form .row{
+    display:flex; flex-direction:column; gap:6px;
+  }
+  .form label{
+    font-size:12px; color:var(--sub);
+  }
+  .input{
+    inline-size:100%; padding:10px 12px; border-radius:10px;
+    background: rgba(255,255,255,.02); color: var(--text);
+    border:1px solid var(--line); outline:none;
+  }
+  .input:focus{
+    border-color: rgba(96,165,250,.45);
+    box-shadow: 0 0 0 3px rgba(96,165,250,.18);
+  }
+  .help{
+    font-size:12px; color:var(--sub);
+  }
+  .link{
+    color:#93c5fd; text-decoration:underline; cursor:pointer;
+  }
+  
+  .actions{
+    display:flex; gap:8px; flex-wrap:wrap; align-items:center;
+  }
+  .btn-primary{
+    background: linear-gradient(135deg, var(--acc), var(--acc-2));
+    color:#0b1020; border:0; border-radius:10px; padding:10px 14px; font-weight:800; cursor:pointer;
+    box-shadow: 0 8px 28px rgba(59,130,246,.25), 0 0 0 1px rgba(255,255,255,.04) inset;
+    transition: transform .08s ease, box-shadow .25s ease;
+  }
+  .btn-primary:hover{ box-shadow: 0 12px 36px rgba(59,130,246,.35), 0 0 24px -10px rgba(239,68,68,.45) }
+  .btn-primary:active{ transform: translateY(1px) }
+  
+  .btn-ghost{
+    background:transparent; color:var(--text);
+    border:1px dashed var(--line); border-radius:10px; padding:10px 14px; cursor:pointer;
+  }
+  .btn-ghost:hover{
+    background: linear-gradient(90deg, rgba(59,130,246,.12), rgba(239,68,68,.10));
+    border-color: rgba(96,165,250,.35);
+  }
+  
+  /* Planes */
+  .plans{
+    display:grid; grid-template-columns:1fr; gap:10px;
+  }
+  .plan-card{
+    border:1px solid var(--line);
+    background: linear-gradient(180deg, rgba(255,255,255,.02), rgba(0,0,0,.08));
+    border-radius:12px; padding:12px; display:flex; flex-direction:column; gap:8px;
+  }
+  .plan-head{
+    display:flex; align-items:center; justify-content:space-between;
+  }
+  .plan-name{ font-weight:900 }
+  .plan-badges{ display:flex; gap:6px; align-items:center }
+  .badge{
+    font-size:11px; color:#0b1020; background:#93c5fd; padding:2px 8px; border-radius:999px; font-weight:800;
+  }
+  .badge.premium{ background:#fca5a5 }
+  .plan-price{
+    font-size:20px; font-weight:900;
+    background: linear-gradient(90deg, #60a5fa, #3b82f6, #ef4444);
+    -webkit-background-clip:text; background-clip:text; color: transparent;
+  }
+  .plan-features{
+    display:flex; flex-direction:column; gap:6px; color:var(--sub); font-size:14px;
+  }
+  .plan-cta{ margin-top:6px; display:flex; gap:8px; flex-wrap:wrap }
+  
+  /* División visual */
+  .divider{
+    block-size:1px; background: var(--line); opacity:.7;
+    margin: 8px 0;
+  }
+  
+  /* PayPal demo / pasarela */
+  .paypal-box{
+    border:1px dashed var(--line);
+    background: rgba(255,255,255,.02);
+    border-radius:12px; padding:12px;
+  }
+  
+  /* Notas pequeñas */
+  .note{
+    color:var(--sub); font-size:12px;
+  }
+  
+  /* Responsive */
+  @media (max-width: 1024px){
+    .plans{ grid-template-columns: 1fr; }
+  }
+  

@@ -1,0 +1,110 @@
+/* ==========================================
+   Select unificado (.cm-select)
+   - Sin necesidad de variables globales: usa fallbacks
+   - Accesible (focus-visible, forced-colors)
+   - Tweaks móviles y Windows
+   ========================================== */
+
+/* === CONTROL <select> === */
+.cm-select{
+  appearance:none;
+  -webkit-appearance:none;
+  -moz-appearance:none;
+
+  /* Colores con fallback si no hay variables globales */
+  background-color: var(--cm-blue, #1b67ff);
+  color:#fff;
+
+  border:1px solid rgba(255,255,255,.18);
+  border-radius:10px;
+  padding:8px 12px;
+  padding-right:34px;         /* espacio para la flecha */
+  font:inherit;
+  line-height:1.2;
+  outline:none;
+  cursor:pointer;
+
+  transition:
+    box-shadow .15s ease,
+    border-color .15s ease,
+    background-color .15s ease;
+
+  /* Flecha que hereda color del texto (más flexible que blanco fijo) */
+  background-image:
+    url("data:image/svg+xml;utf8,\
+<svg xmlns='http://www.w3.org/2000/svg' width='10' height='6' viewBox='0 0 10 6' fill='none'>\
+<path d='M1 1l4 4 4-4' stroke='currentColor' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/>\
+</svg>");
+  background-repeat:no-repeat;
+  background-position:right 10px center;
+
+  /* Mejor tacto móvil */
+  -webkit-tap-highlight-color: transparent;
+  min-height: 36px;
+}
+
+/* Hover/active con fallbacks */
+.cm-select:hover{
+  background-color: var(--cm-blue-700, #1349b3);
+  border-color: rgba(255,255,255,.28);
+}
+.cm-select:focus,
+.cm-select:focus-visible{
+  box-shadow:0 0 0 3px rgba(27,103,255,.35);
+  border-color:rgba(255,255,255,.35);
+}
+.cm-select:disabled{
+  opacity:.65;
+  cursor:not-allowed;
+}
+
+/* Quitar el triangulito legacy de Edge/IE (si apareciera) */
+.cm-select::-ms-expand{ display:none; }
+
+/* === MENÚ DESPLEGABLE (opciones) ===
+   Nota: algunos Windows ignoran el bg del menú del sistema.
+   Aun así definimos colores donde se respeten. */
+.cm-select option{
+  color:#fff;
+  background-color: var(--cm-blue-600, #1553cc);
+}
+.cm-select optgroup{
+  color:#fff;
+  background-color: var(--cm-blue-600, #1553cc);
+}
+.cm-select option:checked{
+  background-color: var(--cm-blue, #1b67ff);
+}
+.cm-select option:hover{
+  background-color: var(--cm-blue-700, #1349b3);
+}
+
+/* Fallback para entornos que ignoran colores avanzados */
+@supports not (color: color(display-p3 1 1 1)){
+  .cm-select option,
+  .cm-select optgroup{
+    background-color:#0f1116;
+    color:#fff;
+  }
+}
+
+/* Alta accesibilidad: modo high-contrast/forced-colors (Windows) */
+@media (forced-colors: active){
+  .cm-select{
+    border: 1px solid CanvasText;
+    background-color: Highlight;
+    color: HighlightText;
+  }
+  .cm-select option{
+    background-color: Highlight;
+    color: HighlightText;
+  }
+}
+
+/* Respeto a reduce motion */
+@media (prefers-reduced-motion: reduce){
+  .cm-select{
+    transition: none;
+  }
+}
+

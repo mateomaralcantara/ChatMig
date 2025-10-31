@@ -1,0 +1,27 @@
+
+
+backend
+cd C:\Users\martin\Desktop\ChatSed\services\api
+.\.venv\Scripts\Activate.ps1
+uvicorn app.main:app --reload
+
+
+frontend
+cd C:\Users\martin\Desktop\ChatSed\services\web
+npm run dev
+
+
+conocimiento
+cd C:\Users\martin\Desktop\ChatSed\services\api
+.\.venv\Scripts\Activate.ps1
+python scripts/ingest_knowledge.py
+
+
+https://chatgpt.com/c/68f6afc7-f074-832e-ad52-f9a8554e0297
+
+
+moreliaandujar31-dotcom
+moreliaandujar31@gmail.com
+
+En que ruta exacta va esto: respuesta corta?
+tts.py

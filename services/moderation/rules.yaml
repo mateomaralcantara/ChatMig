@@ -1,0 +1,13 @@
+banned_intents:
+  - acoso
+  - vigilar
+  - presionar
+  - chantaje
+  - control
+  - hackear
+  - doxxing
+  - drogas
+
+max_message_marks:
+  question_marks: 5
+  exclamation_marks: 3

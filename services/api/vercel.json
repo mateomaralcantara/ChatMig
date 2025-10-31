@@ -1,0 +1,8 @@
+{
+    "version": 2,
+    "framework": "vite",
+    "routes": [
+      { "src": "/api/(.*)", "dest": "/api/$1" }
+    ]
+  }
+  

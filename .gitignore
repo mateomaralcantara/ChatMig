@@ -1,0 +1,31 @@
+# Node / Vite
+node_modules/
+dist/
+.vite/
+*.log
+npm-debug.log*
+pnpm-debug.log*
+
+# Vercel
+.vercel/
+
+# Env (NO subir secretos)
+.env
+.env.*
+services/web/.env
+services/web/.env.*
+services/api/.env
+services/api/.env.*
+
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+*.egg-info/
+.eggs/
+
+# IDE / OS
+.vscode/
+.idea/
+.DS_Store

@@ -1,0 +1,27 @@
+# Supabase local project config
+project_id = "chatmig-local"
+api = { port = 54321, schemas = ["public", "storage", "graphql_public"] }
+
+[studio]
+port = 54323
+
+[invoke]
+# Para edge functions
+port = 54322
+
+[functions."billing-create-checkout"]
+verify_jwt = true
+
+[functions."billing-portal"]
+verify_jwt = true
+
+[functions."membership-status"]
+verify_jwt = true
+
+[functions."stripe-webhook"]
+verify_jwt = false  # Stripe no manda JWT
+
+# (Opcional) CORS para invoke
+[headers]
+"Access-Control-Allow-Origin" = "*"
+"Access-Control-Allow-Headers" = "authorization, x-client-info, apikey, content-type"
