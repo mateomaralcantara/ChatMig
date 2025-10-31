@@ -1,11 +1,11 @@
 {
-  "version": 2,
-  "builds": [
-    { "src": "services/web/package.json", "use": "@vercel/static-build", "config": { "distDir": "dist" } },
-    { "src": "services/api/main.py", "use": "@vercel/python" }
-  ],
-  "routes": [
-    { "src": "^/api/.*", "dest": "services/api/main.py" },
-    { "src": "/(.*)", "dest": "services/web/dist/" }
-  ]
-}
+    "builds": [
+      { "src": "services/web/package.json", "use": "@vercel/static-build", "config": { "distDir": "services/web/dist" } },
+      { "src": "services/api/index.py", "use": "@vercel/python" }
+    ],
+    "routes": [
+      { "src": "^/api/.*", "dest": "services/api/index.py" },
+      { "src": "/(.*)", "dest": "services/web/dist/$1" }
+    ]
+  }
+  
